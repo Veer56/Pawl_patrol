@@ -3,8 +3,8 @@ Project voor Minor AI, onderwerp afbeeldingen van petfinder.my. opdracht : 'In t
 
 ## Team-members
 * Brian Jakobs
-* Damla
-* Vera
+* Damla Baspinar
+* Vera Eising
 * Joram Brokkelkamp
 
 
