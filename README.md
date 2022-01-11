@@ -4,6 +4,7 @@ Project voor Minor AI, onderwerp afbeeldingen van petfinder.my. opdracht : 'In t
 Team-members:
 Brian
 Damla
+Joram
 Vera
 
 
