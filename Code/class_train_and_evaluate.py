@@ -51,10 +51,10 @@ class Train_and_evaluate():
         self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
         # Fit the model using the train and validation data
-        history = self.model.fit_generator(train_iterator, steps_per_epoch=len(train_iterator),
+        history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
                     epochs=self.epochs)
 
-        print('Damla deze print', history.history)
+        print('Damla deze print', history.keys())
 
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
