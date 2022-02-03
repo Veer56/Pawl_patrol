@@ -82,13 +82,10 @@ class Train_and_evaluate():
 
         # Define an empty list to store the cv scores of every fold
         cv_scores= []
-        
-        
-        print('print 1')
+
         # Create a for_loop to fit the model for every fold
         for train, test in kfold.split(self.data_x, self.data_y):
-            
-            print('print 2')
+
 
             # Use train_test_split to split the data into a training set and a validation set
             train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
@@ -118,7 +115,7 @@ class Train_and_evaluate():
 
             plt.show()
             
-        print('The mean score is {cv_scores.mean()}')
+        print('The mean score is', cv_scores.mean()')
         
 
     def train_combined(self, tabular_data, preprocess={}, augment={}):
