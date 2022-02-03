@@ -118,8 +118,8 @@ class Train_and_evaluate():
         for preprocessing of samples and data augmentation.
         '''
 
-        # Use ImageDataGenerator to preprocess the samples or apply data augmentation
-        datagen = ImageDataGenerator(**preprocess, **augment)
+#         # Use ImageDataGenerator to preprocess the samples or apply data augmentation
+#         datagen = ImageDataGenerator(**preprocess, **augment)
 
         # Use train_test_split to split the data into a training set and a validation set
         train_x, val_x, train_y, val_y, train_tabular, test_tabular = train_test_split(self.data_x, self.data_y, tabular_data, test_size=0.2, random_state=11)
