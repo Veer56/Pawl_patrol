@@ -135,6 +135,8 @@ class Train_and_evaluate():
 
         history = self.model.fit(train_gen.flow((train_x, train_tabular), train_y), epochs=self.epochs,
                             validation_data=val_gen.flow((val_x, test_tabular), val_y))
+        
+        fig, axs = plt.subplots(1,2,figsize=(20,5))
 
         for i, metric in enumerate(history.history.keys()):
             axs[i].plot(history.history[metric])
