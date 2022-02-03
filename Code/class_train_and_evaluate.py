@@ -82,6 +82,8 @@ class Train_and_evaluate():
 
         # Define an empty list to store the cv scores of every fold
         cv_scores= []
+        
+        
 
         # Create a for_loop to fit the model for every fold
         for train, test in kfold.split(self.data_x, self.data_y):
@@ -89,33 +91,36 @@ class Train_and_evaluate():
             # Use train_test_split to split the data into a training set and a validation set
             train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
-        # Use train_test_split to split the data into a training set and a validation set
-        train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
+            # Use train_test_split to split the data into a training set and a validation set
+            train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
-        train_gen = preprocessing.image.ImageDataGenerator(**preprocess, **augment)
-        train_gen.fit(train_x) 
-        
-        val_gen = preprocessing.image.ImageDataGenerator(**preprocess)
-        val_gen.fit(val_x)        
+            train_gen = preprocessing.image.ImageDataGenerator(**preprocess, **augment)
+            train_gen.fit(train_x) 
 
-        # Use compile to compile the model
-        self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
+            val_gen = preprocessing.image.ImageDataGenerator(**preprocess)
+            val_gen.fit(val_x)        
 
-        history = self.model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
-        keys_history = list(history.history.keys())
+            # Use compile to compile the model
+            self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
-        fig, axs = plt.subplots(1,2,figsize=(20,5))
+            history = self.model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
+            keys_history = list(history.history.keys())
 
-        for i, metric in enumerate(keys_history[:2]):
-            axs[i - 1].plot(history.history[metric])
-            axs[i - 1].plot(history.history['val_'+metric])
-            axs[i - 1].legend(['training', 'validation'], loc='best')
+            fig, axs = plt.subplots(1,2,figsize=(20,5))
 
-            axs[i - 1].set_title('Model '+metric)
-            axs[i - 1].set_ylabel(metric)
-            axs[i - 1].set_xlabel('epoch')
+            for i, metric in enumerate(keys_history[:2]):
+                axs[i - 1].plot(history.history[metric])
+                axs[i - 1].plot(history.history['val_'+metric])
+                axs[i - 1].legend(['training', 'validation'], loc='best')
+
+                axs[i - 1].set_title('Model '+metric)
+                axs[i - 1].set_ylabel(metric)
+                axs[i - 1].set_xlabel('epoch')
+
+            plt.show()
             
-        plt.show()
+        print('The mean score is {cv_scores.mean()}')
+        
 
     def train_combined(self, tabular_data, preprocess={}, augment={}):
         '''
