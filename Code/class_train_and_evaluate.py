@@ -91,9 +91,6 @@ class Train_and_evaluate():
             # Use train_test_split to split the data into a training set and a validation set
             train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
-            # Use train_test_split to split the data into a training set and a validation set
-            train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
-
             train_gen = preprocessing.image.ImageDataGenerator(**preprocess, **augment)
             train_gen.fit(train_x) 
 
