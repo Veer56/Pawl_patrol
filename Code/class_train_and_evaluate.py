@@ -133,7 +133,7 @@ class Train_and_evaluate():
 
         self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
-        history = model.fit(train_gen.flow((train_x, train_tabular), train_y), epochs=self.epochs,
+        history = self.model.fit(train_gen.flow((train_x, train_tabular), train_y), epochs=self.epochs,
                             validation_data=val_gen.flow((val_x, test_tabular), val_y))
 
         for i, metric in enumerate(history.history.keys()):
