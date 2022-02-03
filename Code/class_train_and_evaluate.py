@@ -99,7 +99,7 @@ class Train_and_evaluate():
 
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
-        for i, metric in enumerate(history.history.keys()):
+        for i, metric in enumerate(keys_history[:2]):
             axs[i - 1].plot(history.history[metric])
             axs[i - 1].plot(history.history['val_'+metric])
             axs[i - 1].legend(['training', 'validation'], loc='best')
@@ -137,8 +137,8 @@ class Train_and_evaluate():
                             validation_data=val_gen.flow((val_x, test_tabular), val_y))
         
         fig, axs = plt.subplots(1,2,figsize=(20,5))
-
-        for i, metric in enumerate(history.history.keys()):
+        
+        for i, metric in enumerate(keys_history[:2]):
             axs[i - 1].plot(history.history[metric])
             axs[i - 1].plot(history.history['val_'+metric])
             axs[i - 1].legend(['training', 'validation'], loc='best')
