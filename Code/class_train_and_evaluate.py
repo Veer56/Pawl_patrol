@@ -34,26 +34,37 @@ class Train_and_evaluate():
         for preprocessing of samples and data augmentation.
         '''
 
-        # Use ImageDataGenerator to preprocess the samples or apply data augmentation
-        datagen = ImageDataGenerator(**preprocess, **augment)
+#         # Use ImageDataGenerator to preprocess the samples or apply data augmentation
+#         datagen = ImageDataGenerator(**preprocess, **augment)
 
         # Use train_test_split to split the data into a training set and a validation set
         train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
-        # Compute the mean of the training data
-        datagen.fit(train_x)
+       train_gen = preprocessing.image.ImageDataGenerator(**preprocess, **augment)
+       train_gen.fit(train_x) 
+        
+        val_gen = preprocessing.image.ImageDataGenerator(**preprocess)
+        val_gen.fit(val_x)        
+        
+        
+#         # Compute the mean of the training data
+#         datagen.fit(train_x)
+        
 
-        # Wat?
-        train_iterator = datagen.flow(train_x, train_y)
-        test_iterator = datagen.flow(val_x, val_y)
+#         # Wat?
+#         train_iterator = datagen.flow(train_x, train_y)
+#         test_iterator = datagen.flow(val_x, val_y)
 
         # Use compile to compile the model
         self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
         # HIER DAMLA 
-        # Fit the model using the train and validation data
-        history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
-                    epochs=self.epochs, validation_data=test_iterator.flow(val_x, val_y))
+        
+        
+        history = model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
+#         # Fit the model using the train and validation data
+#         history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
+#                     epochs=self.epochs, validation_data=test_iterator.flow(val_x, val_y))
 
         print(history.history.keys())
 
