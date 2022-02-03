@@ -19,9 +19,14 @@ class Train_and_evaluate():
         This method initializes the model, the chosen optimizer, the features (data_x)
         and the target values (data_y).
         '''
-
+        
+        if optimizer == 'SGD':
+            self.optimizer = tf.keras.optimizers.SGD(learning_rate=0.0001)
+        else: 
+            self.optimizer = optimizer
+            
+            
         self.model = model
-        self.optimizer = optimizer
         self.data_x = data_x
         self.data_y = data_y
         self.epochs = epochs
