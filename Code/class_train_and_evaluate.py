@@ -79,45 +79,35 @@ class Train_and_evaluate():
         # Create a for_loop to fit the model for every fold
         for train, test in kfold.split(self.data_x, self.data_y):
 
-            # Use ImageDataGenerator to preprocess the samples or apply data augmentation
-            datagen = ImageDataGenerator(**preprocess, **augment)
-
             # Use train_test_split to split the data into a training set and a validation set
             train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
-            # Compute the mean of the training data
-            datagen.fit(train_x)
+        # Use train_test_split to split the data into a training set and a validation set
+        train_x, val_x, train_y, val_y = train_test_split(self.data_x, self.data_y, test_size=0.2, random_state=11)
 
+        train_gen = preprocessing.image.ImageDataGenerator(**preprocess, **augment)
+        train_gen.fit(train_x) 
+        
+        val_gen = preprocessing.image.ImageDataGenerator(**preprocess)
+        val_gen.fit(val_x)        
 
-            train_iterator = datagen.flow(train_x, train_y)
-            test_iterator = datagen.flow(val_x, val_y)
+        # Use compile to compile the model
+        self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
-            # Fit the model using compile
-            self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
+        history = self.model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
 
-            # Fit the model using the train and validation data
-            history = self.model.fit_generator(train_iterator, steps_per_epoch=len(train_iterator),
-                        epochs=self.epochs)
+        fig, axs = plt.subplots(1,2,figsize=(20,5))
 
-        try:
-            for i, metric in enumerate(['loss', 'root_mean_squared_error']):
-                axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val'+metric])
-                axs[i].legend(['training', 'validation'], loc='best')
+        for i, metric in enumerate(history.history.keys()):
+            axs[i].plot(history.history[metric])
+            axs[i].plot(history.history['val_'+metric])
+            axs[i].legend(['training', 'validation'], loc='best')
 
-                axs[i].set_title('Model '+metric)
-                axs[i].set_ylabel(metric)
-                axs[i].setxlabel('epoch')
-
-        except:
-            for i, metric in enumerate(['loss', 'RootMeanSquaredError']):
-                axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val'+metric])
-                axs[i].legend(['training', 'validation'], loc='best')
-
-                axs[i].set_title('Model '+metric)
-                axs[i].set_ylabel(metric)
-                axs[i].set_xlabel('epoch')
+            axs[i].set_title('Model '+metric)
+            axs[i].set_ylabel(metric)
+            axs[i].set_xlabel('epoch')
+            
+        plt.show()
 
     def train_combined(self, tabular_data, preprocess={}, augment={}):
         '''
@@ -145,21 +135,13 @@ class Train_and_evaluate():
         history = model.fit(train_gen.flow((train_x, train_tabular), train_y), epochs=self.epochs,
                             validation_data=val_gen.flow((val_x, test_tabular), val_y))
 
-        # Plot the learning curves
-        plt.plot(history.history['RootMeanSquaredError'])
-        plt.plot(history.history['val_RootMeanSquaredError'])
-        plt.title('model RootMeanSquaredError')
-        plt.ylabel('RootMeanSquaredError')
-        plt.xlabel('epoch')
-        plt.legend(['train', 'test'], loc='upper left')
-        plt.show()
+        for i, metric in enumerate(history.history.keys()):
+            axs[i].plot(history.history[metric])
+            axs[i].plot(history.history['val_'+metric])
+            axs[i].legend(['training', 'validation'], loc='best')
 
-        plt.plot(history.history['loss'])
-        plt.plot(history.history['val_loss'])
-        plt.title('model loss')
-        plt.ylabel('loss')
-        plt.xlabel('epoch')
-        plt.legend(['train', 'test'], loc='upper left')
-        plt.show()
+            axs[i].set_title('Model '+metric)
+            axs[i].set_ylabel(metric)
+            axs[i].set_xlabel('epoch')
 
         plt.show()
