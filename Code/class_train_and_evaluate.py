@@ -54,14 +54,14 @@ class Train_and_evaluate():
         history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
                     epochs=self.epochs)
 
-        print(history)
+        print(history.history.keys())
 
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
         try:
             for i, metric in enumerate(['loss', 'root_mean_squared_error']):
                 axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val'+metric])
+                axs[i].plot(history.history['val_'+metric])
                 axs[i].legend(['training', 'validation'], loc='best')
 
                 axs[i].set_title('Model '+metric)
@@ -71,7 +71,7 @@ class Train_and_evaluate():
         except:
             for i, metric in enumerate(['loss', 'RootMeanSquaredError']):
                 axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val'+metric])
+                axs[i].plot(history.history['val_'+metric])
                 axs[i].legend(['training', 'validation'], loc='best')
 
                 axs[i].set_title('Model '+metric)
