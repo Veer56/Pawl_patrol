@@ -54,7 +54,7 @@ class Train_and_evaluate():
         history = self.model.fit_generator(train_iterator, steps_per_epoch=len(train_iterator),
                     epochs=self.epochs)
 
-        print('Damla deze print', history,history)
+        print('Damla deze print', history.history)
 
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
