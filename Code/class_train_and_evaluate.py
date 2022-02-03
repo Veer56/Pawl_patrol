@@ -100,13 +100,13 @@ class Train_and_evaluate():
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
         for i, metric in enumerate(history.history.keys()):
-            axs[i].plot(history.history[metric])
-            axs[i].plot(history.history['val_'+metric])
-            axs[i].legend(['training', 'validation'], loc='best')
+            axs[i - 1].plot(history.history[metric])
+            axs[i - 1].plot(history.history['val_'+metric])
+            axs[i - 1].legend(['training', 'validation'], loc='best')
 
-            axs[i].set_title('Model '+metric)
-            axs[i].set_ylabel(metric)
-            axs[i].set_xlabel('epoch')
+            axs[i - 1].set_title('Model '+metric)
+            axs[i - 1].set_ylabel(metric)
+            axs[i - 1].set_xlabel('epoch')
             
         plt.show()
 
@@ -139,12 +139,12 @@ class Train_and_evaluate():
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
         for i, metric in enumerate(history.history.keys()):
-            axs[i].plot(history.history[metric])
-            axs[i].plot(history.history['val_'+metric])
-            axs[i].legend(['training', 'validation'], loc='best')
+            axs[i - 1].plot(history.history[metric])
+            axs[i - 1].plot(history.history['val_'+metric])
+            axs[i - 1].legend(['training', 'validation'], loc='best')
 
-            axs[i].set_title('Model '+metric)
-            axs[i].set_ylabel(metric)
-            axs[i].set_xlabel('epoch')
+            axs[i - 1].set_title('Model '+metric)
+            axs[i - 1].set_ylabel(metric)
+            axs[i - 1].set_xlabel('epoch')
 
         plt.show()
