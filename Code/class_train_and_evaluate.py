@@ -115,7 +115,7 @@ class Train_and_evaluate():
 
             plt.show()
             
-        print('The mean score is', mean(cv_scores))
+        print('The mean score is', np.mean(cv_scores))
         
 
     def train_combined(self, tabular_data, preprocess={}, augment={}):
