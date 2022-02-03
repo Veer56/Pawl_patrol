@@ -77,7 +77,7 @@ class Train_and_evaluate():
 
             axs[i].set_title('Model '+metric)
             axs[i].set_ylabel(metric)
-            axs[i].setxlabel('epoch')
+            axs[i].set_xlabel('epoch')
 
         plt.show()
 
