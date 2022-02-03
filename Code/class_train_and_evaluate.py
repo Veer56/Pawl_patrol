@@ -61,7 +61,7 @@ class Train_and_evaluate():
         # HIER DAMLA 
         
         
-        history = model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
+        history = self.model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
 #         # Fit the model using the train and validation data
 #         history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
 #                     epochs=self.epochs, validation_data=test_iterator.flow(val_x, val_y))
