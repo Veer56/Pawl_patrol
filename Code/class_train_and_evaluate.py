@@ -50,33 +50,23 @@ class Train_and_evaluate():
         # Use compile to compile the model
         self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
+        # HIER DAMLA 
         # Fit the model using the train and validation data
         history = self.model.fit(train_iterator, steps_per_epoch=len(train_iterator),
-                    epochs=self.epochs)
+                    epochs=self.epochs, validation_data=test_iterator.flow(val_x, val_y))
 
         print(history.history.keys())
 
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
-        try:
-            for i, metric in enumerate(['loss', 'root_mean_squared_error']):
-                axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val_'+metric])
-                axs[i].legend(['training', 'validation'], loc='best')
+        for i, metric in enumerate(history.history.keys()):
+            axs[i].plot(history.history[metric])
+            axs[i].plot(history.history['val_'+metric])
+            axs[i].legend(['training', 'validation'], loc='best')
 
-                axs[i].set_title('Model '+metric)
-                axs[i].set_ylabel(metric)
-                axs[i].setxlabel('epoch')
-
-        except:
-            for i, metric in enumerate(['loss', 'RootMeanSquaredError']):
-                axs[i].plot(history.history[metric])
-                axs[i].plot(history.history['val_'+metric])
-                axs[i].legend(['training', 'validation'], loc='best')
-
-                axs[i].set_title('Model '+metric)
-                axs[i].set_ylabel(metric)
-                axs[i].set_xlabel('epoch')
+            axs[i].set_title('Model '+metric)
+            axs[i].set_ylabel(metric)
+            axs[i].setxlabel('epoch')
 
         plt.show()
 
