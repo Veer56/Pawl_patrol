@@ -47,10 +47,11 @@ class Train_and_evaluate():
         self.model.compile(loss='mse', optimizer=self.optimizer, metrics=['RootMeanSquaredError'])
 
         history = self.model.fit(train_gen.flow(train_x, train_y), epochs=self.epochs, validation_data=val_gen.flow(val_x, val_y))
-
+        keys_history = list(history.history.keys())
+        
         fig, axs = plt.subplots(1,2,figsize=(20,5))
 
-        for i, metric in enumerate(history.history.keys()):
+        for i, metric in enumerate(keys_history[:2]):
             axs[i - 1].plot(history.history[metric])
             axs[i - 1].plot(history.history['val_'+metric])
             axs[i - 1].legend(['training', 'validation'], loc='best')
