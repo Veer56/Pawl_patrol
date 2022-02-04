@@ -113,7 +113,7 @@ class Train_and_evaluate():
                 axs[i - 1].set_ylabel(metric)
                 axs[i - 1].set_xlabel('epoch')
             
-            score = model.evaluate(val_gen.flow(train_x[test], np.array(train_y)[test]))[1]
+            score = self.model.evaluate(val_gen.flow(train_x[test], np.array(train_y)[test]))[1]
             cv_scores.append(score)
             
             plt.show()
