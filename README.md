@@ -9,6 +9,6 @@ Project Minor AI, UVA, subject pictures from petfinder.my. assignment : 'In this
 
 ## Content
 In this main branch there are two folders: one with all the codes of the project, second one with the reports of every milestone of the project and images used in the reports.
-Within the Code folder every milestone has it's own folder with multiple codes that were used in that milestone. There is one file with final code where all end codes descriped in the milestones of the report are merged into one .IPYND file. All models in this code were ran at two epochs as a proof of concept. 
+Within the Code folder every milestone has it's own folder with multiple codes that were used in that milestone. There is one folder (Final_code) with final code where all end codes descriped in the milestones of the report are merged into one .IPYND file. All models in this code were ran at two epochs as a proof of concept. 
 
 
