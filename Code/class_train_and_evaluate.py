@@ -115,6 +115,8 @@ class Train_and_evaluate():
             
             plt.show()
             
+            cv_scores.append(self.model.evaluate(val_gen.flow(val_x, val_y))[1])
+            
         print('The mean score is', np.mean(cv_scores))
         
 
